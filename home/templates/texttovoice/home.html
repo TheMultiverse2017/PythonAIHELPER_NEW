@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<form action="{% url 'texttovoice.submit' %}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <textarea  class="form-control" name="text" id="text" width="100%" rows="10" placeholder="Submit your text here..."></textarea>
+     </div>
+     <button type="submit" class="btn btn-primary" style="width: 100%;"> Process </button>
+ </form>
+
+{% endblock %}
