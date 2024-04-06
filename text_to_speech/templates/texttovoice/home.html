@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<form action="{% url 'texttovoice.submit' %}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <select class="form-select mt-5 tts" name="tts" aria-label="Default select example">
+            <option selected>Select TTS</option>
+            <option value="GTTS">GTTS</option>
+            <option value="TIKTOK">TIKTOK</option>
+            <option value="PYTTS">PYTTS</option>
+        </select>
+        <div class="row mt-5 tiktok_voice">
+            <div class="col">
+                <select  class="form-select " name="tiktok_voice">
+                {% for tiktokVoice_id, tiktokVoice_description in all_voices %}
+                    <option value="{{ tiktokVoice_id }}">{{ tiktokVoice_description }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row mt-5 pyttsVoice">
+            <div class="col">
+                <select class="form-select " name="pyttsVoice" aria-label="Default select example">
+                    <option>Voices For PYTTS </option>
+                    <option value="0">MALE</option>
+                    <option value="1">FE_MALE</option>
+                </select>
+            </div>
+            <div class="col">
+                <input class="form-control" type="text" placeholder="Rate" name="pyttsRate"/>
+            </div>
+            <div class="col">
+                <input class="form-control" type="text" placeholder="Volume" name="pyttsVol"/>
+            </div>
+        </div>
+
+        <textarea  class="form-control mt-5" name="text" id="text" width="100%" rows="10" placeholder="Submit your text here..."></textarea>
+     </div>
+     <button type="submit" class="btn btn-primary" style="width: 100%;"> Process </button>
+ </form>
+
+ <script>
+    $(document).ready(function(){
+        $('.tiktok_voice').hide();
+        $('.pyttsVoice').hide();
+
+        $('select[name="tts"]').change(function(){
+            var selectedTTS = $(this).val();
+            if(selectedTTS === 'GTTS'){
+                $('.tiktok_voice').hide();
+                $('.pyttsVoice').hide();
+
+            } else if(selectedTTS === 'TIKTOK'){
+                $('.tiktok_voice').show();
+                $('.pyttsVoice').hide();
+            } else if(selectedTTS === 'PYTTS'){
+                $('.tiktok_voice').hide();
+                $('.pyttsVoice').show();
+            }
+        });
+    });
+ </script>
+
+{% endblock %}
