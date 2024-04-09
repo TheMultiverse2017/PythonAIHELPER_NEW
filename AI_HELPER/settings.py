@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'home',
     'user_reg_logIn',
     'text_to_speech',
+    'storygenerator',
 ]
 
 MIDDLEWARE = [
